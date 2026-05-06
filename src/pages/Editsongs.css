@@ -1,0 +1,36 @@
+.edit-container{
+height:100vh;
+background:#121212;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-left: 570px;
+}
+
+.edit-card{
+background:#181818;
+padding:40px;
+border-radius:10px;
+width:350px;
+color:white;
+}
+
+.edit-card input{
+width:100%;
+padding:12px;
+margin-top:15px;
+background:#2a2a2a;
+border:none;
+color:white;
+}
+
+.edit-card button{
+margin-top:20px;
+width:100%;
+padding:12px;
+background:#1db954;
+border:none;
+border-radius:25px;
+font-weight:bold;
+cursor:pointer;
+}
