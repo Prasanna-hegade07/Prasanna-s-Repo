@@ -7,7 +7,7 @@ const User = require("./models/User");
 
 const app = express();
 
-app.use(cors({origin: "https://spotify-frontend-jipx.onrender.com",methods:["GET","POST","PUT","DELETE"],credentials:true}));
+app.use(cors({origin: "https://spotify-frontend-tjpx.onrender.com",methods:["GET","POST","PUT","DELETE"],credentials:true}));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
