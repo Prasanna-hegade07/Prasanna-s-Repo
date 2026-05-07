@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Home.css";
 
+const BASE_URL = "https://spotify-backend-lydl.onrender.com";
+
 function Home() {
   const [songs, setSongs] = useState([]);
   const [artists, setArtists] = useState([]);
@@ -19,7 +21,6 @@ function Home() {
 
   const fetchSongs = async () => {
     try {
-      const BASE_URL = "https://spotify-backend-lydl.onrender.com";
       const res = await axios.get(`${BASE_URL}/api/auth/songs`);
       setSongs(res.data);
     } catch (error) {
@@ -29,7 +30,6 @@ function Home() {
 
   const fetchArtists = async () => {
     try {
-      const BASE_URL = "https://spotify-backend-lydl.onrender.com";
       const res = await axios.get(`${BASE_URL}/api/auth/artists`);
       setArtists(res.data);
     } catch (error) {
