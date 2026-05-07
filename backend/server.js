@@ -14,7 +14,7 @@ app.use('/api/auth', authRoutes);
 
 
 // Connecting to MongoDB
-mongoose.connect('mongodb://localhost:27017/spotify')
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log(err));
 
@@ -40,3 +40,4 @@ const userRoutes = require("./routes/auth");
 app.use("/api/auth", userRoutes);
 
 
+console.log("MongoURI:", process.env.MONGO_URI); 
