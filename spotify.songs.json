@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "69e8959d032b6aa7f95ab338"
+  },
+  "title": "kesariya",
+  "artist": {
+    "$oid": "69e88dba5292338ae1ebc27b"
+  },
+  "category": "Bollywood",
+  "image": "1776850332864.webp",
+  "audio": "1776850332866.mp3",
+  "createdAt": {
+    "$date": "2026-04-22T09:32:13.109Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T09:32:13.109Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8ad5a2b28449614858da8"
+  },
+  "title": "Channa mereya",
+  "artist": {
+    "$oid": "69e88dba5292338ae1ebc27b"
+  },
+  "category": "Bollywood",
+  "image": "1776856410513.webp",
+  "audio": "1776856410514.mp3",
+  "createdAt": {
+    "$date": "2026-04-22T11:13:30.691Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:13:30.691Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8ae1e2b28449614858db3"
+  },
+  "title": "Yenammi",
+  "artist": {
+    "$oid": "69e8adf72b28449614858db0"
+  },
+  "category": "Sandalwood",
+  "image": "1776856606796.webp",
+  "audio": "1776856606797.mp3",
+  "createdAt": {
+    "$date": "2026-04-22T11:16:46.906Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:16:46.906Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8ae702b28449614858db8"
+  },
+  "title": "Ratanlambiya",
+  "artist": {
+    "$oid": "69e8adcf2b28449614858dae"
+  },
+  "category": "Bollywood",
+  "image": "1776856688373.webp",
+  "audio": "1776856688374.mp3",
+  "createdAt": {
+    "$date": "2026-04-22T11:18:08.490Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:18:08.490Z"
+  },
+  "__v": 0
+}]

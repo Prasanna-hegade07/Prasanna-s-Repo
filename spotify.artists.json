@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "69e88dba5292338ae1ebc27b"
+  },
+  "name": "Arijith singh",
+  "image": "1776848314539.webp",
+  "dob": "1986-05-01",
+  "monthlyListeners": 100000,
+  "createdAt": {
+    "$date": "2026-04-22T08:58:34.559Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T08:58:34.559Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8ada52b28449614858dac"
+  },
+  "name": "Rajesh Krishnan",
+  "image": "1776856485407.webp",
+  "dob": "1978-05-18",
+  "monthlyListeners": 200000,
+  "createdAt": {
+    "$date": "2026-04-22T11:14:45.411Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:14:45.411Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8adcf2b28449614858dae"
+  },
+  "name": "Shreya Ghoshal",
+  "image": "1776856527387.webp",
+  "dob": "1980-12-20",
+  "monthlyListeners": 1000000,
+  "createdAt": {
+    "$date": "2026-04-22T11:15:27.393Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:15:27.393Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e8adf72b28449614858db0"
+  },
+  "name": "Vijay Prakash",
+  "image": "1776856567971.webp",
+  "dob": "1976-02-11",
+  "monthlyListeners": 300000,
+  "createdAt": {
+    "$date": "2026-04-22T11:16:07.974Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-22T11:16:07.974Z"
+  },
+  "__v": 0
+}]

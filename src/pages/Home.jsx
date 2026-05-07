@@ -19,7 +19,8 @@ function Home() {
 
   const fetchSongs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/songs");
+      const BASE_URL = "https://spotify-backend-lydl.onrender.com";
+      const res = await axios.get(`${BASE_URL}/api/auth/songs`);
       setSongs(res.data);
     } catch (error) {
       console.log(error);
@@ -28,7 +29,8 @@ function Home() {
 
   const fetchArtists = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/artists");
+      const BASE_URL = "https://spotify-backend-lydl.onrender.com";
+      const res = await axios.get(`${BASE_URL}/api/auth/artists`);
       setArtists(res.data);
     } catch (error) {
       console.log(error);
@@ -73,7 +75,7 @@ function Home() {
               <div className="song-card" key={song._id}>
                 <div className="cover">
                   <img
-                    src={`http://localhost:5000/uploads/${song.image}`}
+                    src={`${BASE_URL}/uploads/${song.image}`}
                     alt={song.title}
                   />
                   <button onClick={() => playSong(song)} className="play-btn">
@@ -101,7 +103,7 @@ function Home() {
                 className="artist-card"
               >
                 <img
-                  src={`http://localhost:5000/uploads/${artist.image}`}
+                  src={`${BASE_URL}/uploads/${artist.image}`}
                   alt={artist.name}
                 />
                 <h4>{artist.name}</h4>
@@ -115,7 +117,7 @@ function Home() {
         <div className="player">
           <div className="player-left">
             <img
-              src={`http://localhost:5000/uploads/${currentSong.image}`}
+              src={`${BASE_URL}/uploads/${currentSong.image}`}
               alt={currentSong.title}
             />
             <div>
@@ -127,7 +129,7 @@ function Home() {
           <div className="player-center">
             <audio controls autoPlay>
               <source
-                src={`http://localhost:5000/uploads/${currentSong.audio}`}
+                src={`${BASE_URL}/uploads/${currentSong.audio}`}
                 type="audio/mpeg"
               />
             </audio>

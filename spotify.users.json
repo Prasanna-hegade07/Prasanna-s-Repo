@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "69f1ebbca59f00f3b7119163"
+  },
+  "firstName": "Prasanna",
+  "lastName": "Hegade",
+  "email": "dexter07hegade@gmail.com",
+  "password": "123456789",
+  "isPremium": false,
+  "premiumPlan": "3 Month Premium Plan",
+  "__v": 0
+}]
