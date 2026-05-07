@@ -1,46 +1,52 @@
 require("dotenv").config();
-const express = require('express');
-const mongoose = require('mongoose');
+
+const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
-const authRoutes = require('./routes/auth');
-const User = require("./models/User");
+
+const authRoutes = require("./routes/auth");
+const paymentRoutes = require("./routes/payment");
 
 const app = express();
+
+
+//  CORS FIX
 app.use(
-    cors
-    ({origin:"https://spotify-frontend-tjpx.onrender.com",
-        methods:["GET","POST","PUT","DELETE"],
-        credentials:true}
-    ));
+  cors({
+    origin: "https://spotify-frontend-tjpx.onrender.com",
+    credentials: true,
+  })
+);
+
+//  IMPORTANT (preflight fix)
+app.options("*", cors());
+
+
+//  Middlewares
 app.use(express.json());
-app.use('/uploads', 
-    express.static('uploads'));
-app.use('/api/auth', authRoutes);
+app.use("/uploads", express.static("uploads"));
 
 
-// Connecting to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
+//  Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/payment", paymentRoutes);
 
-// Tetsing routes
-app.get('/', (req, res) => {
-    res.send('Welcome to the Spotify backend!');
+
+//  MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+
+
+// Test Route
+app.get("/", (req, res) => {
+  res.send("Welcome to the Spotify backend!");
 });
 
-// Starting the server
+
+// Server Start
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
-
-
-//payment route
-
-
-const paymentRoutes=require("./routes/payment");
-app.use("/api/payment",paymentRoutes);
-
-const userRoutes = require("./routes/auth");
-app.use("/api/auth", userRoutes);
-
