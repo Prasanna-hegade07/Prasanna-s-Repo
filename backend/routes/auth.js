@@ -442,17 +442,17 @@ router.get("/profile/:id", async (req, res) => {
 
 router.post("/upload", upload.single("image"), async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
-
-    if (!req.file) {
-      return res.status(404).json({ message: "No Profile Pic" });
-    }
-    const user =await User.findByIdAndUpdate(
+     const user =await User.findByIdAndUpdate(
       userId,
       { profilePic: req.file.filename },
       { new: true }
     );
+    
+
+    if (!req.file) {
+      return res.status(404).json({ message: "No Profile Pic" });
+    }
+   
 
     res.json({ message: "Profile picture uploaded successfully" });
   } 
