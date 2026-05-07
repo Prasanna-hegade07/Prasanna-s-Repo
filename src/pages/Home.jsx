@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Home.css";
 
-const BASE_URL = "https://spotify-backend-lydl.onrender.com";
+const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
 function Home() {
   const [songs, setSongs] = useState([]);
