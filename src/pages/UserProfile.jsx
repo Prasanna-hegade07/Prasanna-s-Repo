@@ -1,101 +1,64 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserProfile.css";
-import { useNavigate } from "react-router-dom";
 
-function Dashboard() {
+const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
-  const [user, setUser] = useState(null);
-  const [image, setImage] = useState(null);
-  const navigate = useNavigate();
+function UserProfile() {
+
+  const [userData, setUserData] = useState(null);
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    fetchUser();
+
+    if (user?._id) {
+      fetchProfile();
+    }
+
   }, []);
 
-  const fetchUser = async () => {
+  const fetchProfile = async () => {
+
     try {
-      const userId = localStorage.getItem("userId");
 
       const res = await axios.get(
-        `http://localhost:5000/api/auth/profile/${userId}`
+        `${BASE_URL}/api/auth/profile/${user._id}`
       );
 
-      setUser(res.data);
+      setUserData(res.data);
 
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+
+      console.log(error);
+
     }
   };
 
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("userId", localStorage.getItem("userId"));
-
-    try {
-      await axios.post("http://localhost:5000/api/auth/upload", formData);
-      fetchUser(); 
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  if (!user) return <h2>Loading...</h2>;
+  if (!userData) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
-    <div className="dashboard">
 
-      <div className="sidebar">
+    <div className="profile-container">
 
-          <img
-            src={
-              user.profilePic
-                ? `http://localhost:5000/uploads/${user.profilePic}`
-                : "/default.png"
-            }
-            className="profile-img"
-          />
+      <div className="profile-card">
 
-          <div>
-            <h2>{user.firstName}</h2>
-            <p>{user.email}</p>
+        <img
+          src={`${BASE_URL}/uploads/${userData.profilePic}`}
+          alt="profile"
+          className="profile-image"
+        />
 
-            <label className="upload-btn">
-              Change Photo
-              <input type="file" hidden onChange={handleUpload} />
-            </label>
+        <h2>{userData.name}</h2>
 
-        </div>
+        <p>{userData.email}</p>
 
-        <div className="dashboard-card">
-          <h3>Subscription</h3>
-
-          <p className={`status ${user.premium ? "premium" : "free"}`}>
-            Status: {user.premium ? "Premium" : "Free"}
-          </p>
-
-          <p>Plan: {user.premiumPlan}</p>
-
-          {!user.premium && (
-            <button
-              className="upgrade-btn"
-              onClick={() => navigate("/subscription")}
-            >
-              Upgrade
-            </button>
-          )}
-        </div>
-
-      </div>
-
-      <div className="main-content">
-
-        <h2>Welcome, {user.firstName} 👋</h2>
-
-        <p>Start listening to your favorite music 🎧</p>
+        <h3>
+          Subscription :
+          {userData.isPremium ? " Premium User 👑" : " Free User"}
+        </h3>
 
       </div>
 
@@ -103,4 +66,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default UserProfile;

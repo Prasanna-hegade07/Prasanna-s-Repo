@@ -388,18 +388,19 @@ router.post("/upgrade", async (req, res) => {
 
 // GET USER PROFILE
 router.get("/profile/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).select("-password");
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+  try {
+
+    const user = await User.findById(req.params.id);
 
     res.json(user);
 
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Error fetching profile",
+    });
+
   }
 });
 
