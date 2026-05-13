@@ -45,11 +45,15 @@ function UserProfile() {
 
       <div className="profile-card">
 
-        <img
-          src={`${BASE_URL}/uploads/${userData.profilePic}`}
-          alt="profile"
-          className="profile-image"
-        />
+       <img
+  src={
+    userData.profilePic
+      ? `${BASE_URL}/uploads/${userData.profilePic}`
+      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+  }
+  alt="profile"
+  className="profile-image"
+/>
 
         <h2>{userData.name}</h2>
 
@@ -57,7 +61,15 @@ function UserProfile() {
 
         <h3>
           Subscription :
-          {userData.isPremium ? " Premium User 👑" : " Free User"}
+          <div
+  className={`subscription ${
+    userData.isPremium ? "premium" : "free"
+  }`}
+>
+  {userData.isPremium
+    ? "👑 Premium User"
+    : "Free User"}
+</div>
         </h3>
 
       </div>
