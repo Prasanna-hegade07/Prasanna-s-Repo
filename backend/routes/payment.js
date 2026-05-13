@@ -96,4 +96,22 @@ message:"Verification failed"
 }
 });
 
+router.post("/subscribe", async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    await User.findByIdAndUpdate(userId, {
+      isPremium: true,
+      subscriptionType: "Premium",
+    });
+
+    res.status(200).json({
+      message: "Subscription Activated",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Payment Failed",
+    });
+  }
+});
 module.exports = router;

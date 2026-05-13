@@ -4,136 +4,89 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
+const BASE_URL = "https://spotify-backend-lug8.onrender.com";
+
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const [email,setEmail]=useState("");
-const [password,setPassword]=useState("");
+  const navigate = useNavigate();
 
-const navigate=useNavigate();
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-const handleLogin=async(e)=>{
-e.preventDefault();
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/auth/login`,
+      {
+        email,
+        password,
+      }
+    );
 
-try{
+    localStorage.setItem(
+      "user",
+      JSON.stringify(response.data.user)
+    );
 
-const response=await axios.post(
-"http://localhost:5000/api/auth/login",
-{
-email,
-password
-}
-);
+    alert("Login Successful");
 
-// STORE USER ID FOR PAYMENT PREMIUM UPDATE
-localStorage.setItem(
-"userId",
-response.data.user._id
-);
+    navigate("/");
+  } catch (error) {
 
-// optional store user name
-localStorage.setItem(
-"userName",
-response.data.user.firstName
-);
+    if (error.response?.data?.message === "User not found") {
+      alert("Account does not exist. Please create an account first.");
+      navigate("/Registration");
+    }
 
-alert("Login Successful");
+    else if (error.response?.data?.message === "Invalid credentials") {
+      alert("Incorrect password");
+    }
 
-navigate("/UserProfile");
-
-}catch(error){
-
-alert(
-error.response?.data?.message ||
-"Invalid Email or Password"
-);
-
-}
+    else {
+      alert("Login failed");
+    }
+  }
 };
 
-return(
-<div className="login-container">
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <h1>Sign in</h1>
 
-<nav className="navigationbar">
+        <form className="login-form" onSubmit={handleLogin}>
+          <label>Email:</label>
 
-<div className="navigationlogo">
-<img
-src="/images/logob.png"
-className="logo"
-/>
-</div>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-<div className="navbtns">
-<Link to="/Home" className="loginbtnnav">
-Home
-</Link>
+          <label>Password:</label>
 
-<Link to="/Registration" className="regbtnnav">
-Sign up
-</Link>
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-<Link to="/Adminlogin" className="regbtnnav">
-Admin Login
-</Link>
+          <button type="submit" className="login-btn">
+            Sign In
+          </button>
+        </form>
 
-</div>
-
-</nav>
-
-
-<div className="login-card">
-
-<h1>Sign in</h1>
-
-<form
-className="login-form"
-onSubmit={handleLogin}
->
-
-<label>Email:</label>
-
-<input
-type="email"
-placeholder="Enter the Email address"
-required
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-/>
-
-<label>Password:</label>
-
-<input
-type="password"
-placeholder="Password"
-required
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-/>
-
-<button
-type="submit"
-className="login-btn"
->
-Sign In to Listen
-</button>
-
-</form>
-
-<center>
-<p>or</p>
-</center>
-
-<p className="signup-text">
-Don’t have an account?{" "}
-<Link to="/Registration">
-Sign up for Spotify
-</Link>
-</p>
-
-</div>
-
-</div>
-);
-
+        <p className="signup-text">
+          Don’t have an account?
+          <Link to="/Registration"> Sign up</Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Login;

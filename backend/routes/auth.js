@@ -8,94 +8,65 @@ const Artist = require("../models/Artist");
 
 //registration route
 router.post("/register", async (req, res) => {
-
   try {
+    const { name, email, password } = req.body;
 
-    console.log("Incoming Data:", req.body); 
-
-    const { firstName, lastName, email, password } = req.body;
-
-    if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({
-        message: "All fields are required"
-      });
-    }
-
-    
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
-        message: "User already exists"
+        message: "User already exists",
       });
     }
 
     const newUser = new User({
-      firstName,
-      lastName,
+      name,
       email,
-      password
+      password,
     });
 
     await newUser.save();
 
     res.status(201).json({
-      message: "User Registered Successfully"
+      message: "Registration successful",
     });
-
   } catch (error) {
-
-    console.error("Registration Error:", error);
-
     res.status(500).json({
-      message: "Server Error"
+      message: "Server Error",
     });
-
   }
-
 });
 
 
 //login route
 
-router.post("/login", async(req,res)=>{
-try{
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-const {email,password}=req.body;
+    const user = await User.findOne({ email });
 
-if(!email || !password){
-return res.status(400).json({
-message:"All fields required"
-});
-}
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
 
-const user=await User.findOne({email});
+    if (user.password !== password) {
+      return res.status(400).json({
+        message: "Invalid credentials",
+      });
+    }
 
-if(!user){
-return res.status(400).json({
-message:"User not found"
-});
-}
-
-if(user.password!==password){
-return res.status(400).json({
-message:"Invalid credentials"
-});
-}
-
-res.status(200).json({
-message:"Login successful",
-user:user
-});
-
-}catch(err){
-console.log(err);
-
-res.status(500).json({
-message:"Server Error"
-});
-}
-
+    res.status(200).json({
+      message: "Login successful",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 const token = jwt.sign({ id: user._id },"secretkey",{ expiresIn: "1d" });
 res.json({token,user:{
 id:user._id,
@@ -215,10 +186,12 @@ message:"Error Adding Song"
 //get route to fetch all songs
 router.get("/songs", async (req, res) => {
   try {
-    const songs = await Song.find().populate("artist","name image");
+    const songs = await Song.find().populate("artist");
     res.json(songs);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching songs" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching songs",
+    });
   }
 });
 
@@ -314,22 +287,15 @@ res.status(500).json({message:"Update Failed"});
 
 
 //get route to fetch all artists
-router.get("/artists", async(req,res)=>{
-
-try{
-
-const artists = await Artist.find();
-
-res.json(artists);
-
-}catch(err){
-
-res.status(500).json({
-message:"Error fetching artists"
-});
-
-}
-
+router.get("/artists", async (req, res) => {
+  try {
+    const artists = await Artist.find();
+    res.json(artists);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching artists",
+    });
+  }
 });
 
 //artist details route
