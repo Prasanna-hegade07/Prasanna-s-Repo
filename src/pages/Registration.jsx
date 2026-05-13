@@ -22,7 +22,7 @@ function Registration() {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "http://https://spotify-backend-lug8.onrender.com/api/auth/register",
         formData
       );
 

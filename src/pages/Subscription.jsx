@@ -6,7 +6,7 @@ function Subscription(){
 const navigate = useNavigate();
 const payNow = async (amount, planName) => {
 const {data}=await axios.post(
-"http://localhost:5000/api/payment/create-order",
+"http://https://spotify-backend-lug8.onrender.com/api/payment/create-order",
 {
 amount,planName
 }
@@ -31,7 +31,7 @@ handler: async function (response) {
 try {
 
 const verify = await axios.post(
-"http://localhost:5000/api/payment/verify-payment",
+"http://https://spotify-backend-lug8.onrender.com/api/payment/verify-payment",
 {
 razorpay_order_id: response.razorpay_order_id,
 razorpay_payment_id: response.razorpay_payment_id,

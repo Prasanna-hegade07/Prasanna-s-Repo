@@ -32,7 +32,7 @@ formData.append("image",image);
 try{
 
 await axios.post(
-"http://localhost:5000/api/auth/add-artist",
+"http://https://spotify-backend-lug8.onrender.com/api/auth/add-artist",
 formData,
 {
 headers:{

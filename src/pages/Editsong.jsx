@@ -22,7 +22,7 @@ const fetchSong = async ()=>{
 try{
 
 const res = await axios.get(
-`http://localhost:5000/api/auth/song/${id}`
+`http://https://spotify-backend-lug8.onrender.com/api/auth/song/${id}`
 );
 
 setTitle(res.data.title);
@@ -53,7 +53,7 @@ console.log("ID:", id);
 try{
 
 await axios.put(
-`http://localhost:5000/api/auth/edit-song/${id}`,
+`http://https://spotify-backend-lug8.onrender.com/api/auth/edit-song/${id}`,
 formData
 );
 

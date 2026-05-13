@@ -15,7 +15,7 @@ function ViewSongs() {
 
   const fetchSongs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/Viewsongs");
+      const res = await axios.get("http://https://spotify-backend-lug8.onrender.com/api/auth/Viewsongs");
       setSongs(res.data);
     } catch (error) {
       console.log(error);
@@ -24,7 +24,7 @@ function ViewSongs() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/auth/delete-song/${id}`);
+      await axios.delete(`http://https://spotify-backend-lug8.onrender.com/api/auth/delete-song/${id}`);
       alert("Song Deleted");
       fetchSongs();
     } catch (error) {
@@ -40,7 +40,7 @@ function ViewSongs() {
   const updateSong = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/edit-song/${selectedSong._id}`,
+        `http://https://spotify-backend-lug8.onrender.com/api/auth/edit-song/${selectedSong._id}`,
         selectedSong
       );
 
@@ -81,8 +81,8 @@ function ViewSongs() {
 
               <td>{song.artist?.name}</td>
               <td>{song.category}</td>
-              <td>{song.image && <img src={`http://localhost:5000/uploads/${song.image}`} className="vimg" alt={song} />}</td>
-              <td>{song.audio && <audio controls src={`http://localhost:5000/uploads/${song.audio}`} className="vaudio" />}</td>
+              <td>{song.image && <img src={`http://https://spotify-backend-lug8.onrender.com/uploads/${song.image}`} className="vimg" alt={song} />}</td>
+              <td>{song.audio && <audio controls src={`http://https://spotify-backend-lug8.onrender.com/uploads/${song.audio}`} className="vaudio" />}</td>
 
               <td>
                 <div className="action-btn">

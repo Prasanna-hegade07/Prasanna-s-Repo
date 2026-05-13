@@ -22,7 +22,7 @@ function Adminlogin() {
     try {
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/Adminlogin",
+        "http://https://spotify-backend-lug8.onrender.com/api/auth/Adminlogin",
         { email, password }
       );
 
