@@ -20,7 +20,7 @@ const fetchArtists = async()=>{
 try{
 
 const res = await axios.get(
-"http://https://spotify-backend-lug8.onrender.com/api/auth/artists"
+"https://spotify-backend-lug8.onrender.com/api/auth/artists"
 );
 
 setArtists(res.data);
@@ -49,7 +49,7 @@ formData.append("audio",audio);
 try{
 
 await axios.post(
-"http://https://spotify-backend-lug8.onrender.com/api/auth/add-song",
+"https://spotify-backend-lug8.onrender.com/api/auth/add-song",
 formData,
 {
 headers:{
