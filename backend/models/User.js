@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+
   name: {
     type: String,
     required: true,
@@ -29,8 +30,14 @@ const userSchema = new mongoose.Schema({
 
   subscriptionType: {
     type: String,
-    default: "Free",
+    default: "Free User",
   },
+
+  premiumPlan: {
+    type: String,
+    default: "None",
+  },
+
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -42,58 +42,57 @@ message:"Order creation failed"
 // VERIFY PAYMENT
 
 
-router.post("/verify-payment", async(req,res)=>{
-try{
+router.post("/verify-payment", async (req, res) => {
 
-console.log(req.body);
-console.log(process.env.RAZORPAY_KEY_SECRET);
+try {
+
+const crypto = require("crypto");
+
 const {
 razorpay_order_id,
 razorpay_payment_id,
 razorpay_signature,
 userId,
 plan
-}=req.body;
+} = req.body;
 
+const sign = razorpay_order_id + "|" + razorpay_payment_id;
 
-const generated_signature=crypto
-.createHmac(
-"sha256",
-process.env.RAZORPAY_KEY_SECRET
-)
-.update(
-razorpay_order_id + "|" + razorpay_payment_id
-)
+const expectedSign = crypto
+.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+.update(sign.toString())
 .digest("hex");
 
+if (razorpay_signature === expectedSign) {
 
-if(generated_signature===razorpay_signature){
-
-await User.findByIdAndUpdate(
-userId,
-{
-premium:true,
-premiumPlan:plan
-}
-);
-
-return res.json({
-success:true,
-message:"Payment verified"
+await User.findByIdAndUpdate(userId, {
+subscription: "Premium",
+premiumPlan: plan,
+isPremium: true
 });
-}
+
+res.json({
+success: true,
+message: "Payment verified"
+});
+
+} else {
 
 res.status(400).json({
-success:false,
-message:"Invalid Signature"
+success: false,
+message: "Invalid signature"
 });
 
-}catch(err){
-console.log(err);
-res.status(500).json({
-message:"Verification failed"
-});
 }
+
+} catch (error) {
+
+console.log(error);
+
+res.status(500).json(error);
+
+}
+
 });
 
 router.post("/subscribe", async (req, res) => {
