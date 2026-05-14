@@ -9,6 +9,7 @@ function Home() {
   const [songs, setSongs] = useState([]);
   const [artists, setArtists] = useState([]);
   const [currentSong, setCurrentSong] = useState(null);
+  const [selectedMood, setSelectedMood] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -23,19 +24,28 @@ function Home() {
     setCurrentSong(song);
   };
 
-  useEffect(() => {
-    fetchSongs();
-    fetchArtists();
-  }, []);
+ useEffect(() => {
+  fetchSongs(selectedMood);
+  fetchArtists();
+}, [selectedMood]);
 
-  const fetchSongs = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/api/auth/songs`);
-      setSongs(res.data);
-    } catch (error) {
-      console.log(error);
+ const fetchSongs = async (mood = "") => {
+
+  try {
+
+    const BASE_URL = "https://spotify-backend-lug8.onrender.com";
+
+    let url = `${BASE_URL}/api/auth/songs`;
+
+    if (mood) {
+      url += `?mood=${mood}`;
     }
-  };
+    const res = await axios.get(url);
+    setSongs(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   const fetchArtists = async () => {
     try {
@@ -106,6 +116,24 @@ function Home() {
       <div className="content full">
         <div className="section">
           <div className="section-header">
+            <div className="mood-filter">
+
+<select
+value={selectedMood}
+onChange={(e) => setSelectedMood(e.target.value)}
+>
+
+<option value="">All Moods</option>
+<option value="Happy">Happy</option>
+<option value="Sad">Sad</option>
+<option value="Romantic">Romantic</option>
+<option value="Chill">Chill</option>
+<option value="Party">Party</option>
+<option value="Motivational">Motivational</option>
+
+</select>
+
+</div>
             <h2>Trending songs</h2>
             <span>Show all</span>
           </div>

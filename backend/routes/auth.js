@@ -186,12 +186,16 @@ message:"Error Adding Song"
 //get route to fetch all songs
 router.get("/songs", async (req, res) => {
   try {
-    const songs = await Song.find().populate("artist");
+    const mood = req.query.mood;
+    let songs;
+    if (mood) {
+      songs = await Song.find({ mood }).populate("artist");
+    } else {
+      songs = await Song.find().populate("artist");
+    }
     res.json(songs);
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching songs",
-    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
