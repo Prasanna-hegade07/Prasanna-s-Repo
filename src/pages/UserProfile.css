@@ -1,29 +1,24 @@
-body{
-background:#121212;
-font-family:Arial, Helvetica, sans-serif;
-}
-
 .profile-container{
+min-height:100vh;
+background:#000;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-background:linear-gradient(to bottom,#1db954,#121212);
+padding:40px;
 }
 
 .profile-card{
 background:#181818;
 padding:40px;
 border-radius:20px;
-width:350px;
+width:400px;
 text-align:center;
-box-shadow:0 4px 20px rgba(0,0,0,0.5);
-color:white;
+box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
 .profile-image{
-width:140px;
-height:140px;
+width:150px;
+height:150px;
 border-radius:50%;
 object-fit:cover;
 border:4px solid #1db954;
@@ -31,29 +26,72 @@ margin-bottom:20px;
 }
 
 .profile-card h2{
-font-size:28px;
+font-size:32px;
 margin-bottom:10px;
+color:white;
 }
 
-.profile-card p{
+.email{
 color:#b3b3b3;
 margin-bottom:20px;
-font-size:16px;
 }
 
-.subscription{
-background:#1db954;
+.subscription-badge{
 padding:12px;
 border-radius:10px;
 font-weight:bold;
+margin-bottom:25px;
 font-size:18px;
-margin-top:15px;
-}
-
-.free{
-background:#535353;
 }
 
 .premium{
 background:#1db954;
+color:black;
+}
+
+.free{
+background:#333;
+color:white;
+}
+
+.profile-details{
+text-align:left;
+margin-top:20px;
+}
+
+.profile-details p{
+color:#ddd;
+margin:15px 0;
+font-size:17px;
+}
+
+.profile-details span{
+font-weight:bold;
+color:white;
+margin-right:10px;
+}
+
+.logout-btn{
+margin-top:30px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#1db954;
+color:black;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.logout-btn:hover{
+background:#1ed760;
+transform:scale(1.02);
+}
+
+.loading{
+color:white;
+text-align:center;
+margin-top:100px;
 }

@@ -33,10 +33,20 @@ function UserProfile() {
       console.log(error);
 
     }
+
+  };
+
+  const logout = () => {
+
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+
+    window.location.href = "/Login";
+
   };
 
   if (!userData) {
-    return <h2>Loading...</h2>;
+    return <h2 className="loading">Loading...</h2>;
   }
 
   return (
@@ -45,37 +55,57 @@ function UserProfile() {
 
       <div className="profile-card">
 
-       <img
-  src={
-    userData.profilePic
-      ? `${BASE_URL}/uploads/${userData.profilePic}`
-      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  }
-  alt="profile"
-  className="profile-image"
-/>
+        <img
+          src={
+            userData.profilePic
+              ? `${BASE_URL}/uploads/${userData.profilePic}`
+              : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+          }
+          alt="profile"
+          className="profile-image"
+        />
 
         <h2>{userData.name}</h2>
 
-        <p>{userData.email}</p>
+        <p className="email">{userData.email}</p>
 
-        <h3>
-          Subscription :
-          <div
-  className={`subscription ${
-    userData.isPremium ? "premium" : "free"
-  }`}
->
-  {userData.isPremium
-    ? "👑 Premium User"
-    : "Free User"}
-</div>
-        </h3>
+        <div
+          className={`subscription-badge ${
+            userData.isPremium ? "premium" : "free"
+          }`}
+        >
+          {userData.isPremium
+            ? "👑 Premium User"
+            : "Free User"}
+        </div>
+
+        <div className="profile-details">
+
+          <p>
+            <span>Subscription Type:</span>
+            {userData.subscriptionType}
+          </p>
+
+          <p>
+            <span>Premium Plan:</span>
+            {userData.premiumPlan}
+          </p>
+
+        </div>
+
+        <button
+          className="logout-btn"
+          onClick={logout}
+        >
+          Logout
+        </button>
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default UserProfile;
