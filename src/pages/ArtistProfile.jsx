@@ -17,7 +17,7 @@ fetchArtist();
 const fetchArtist = async()=>{
 
 const res=await axios.get(
-`http://https://spotify-backend-lug8.onrender.com/api/auth/artist/${id}`
+`https://spotify-backend-lug8.onrender.com/api/auth/artist/${id}`
 );
 
 setArtist(res.data.artist);
@@ -32,7 +32,7 @@ return(
 <div className="artist-header">
 
 <img
-src={`http://https://spotify-backend-lug8.onrender.com/uploads/${artist.image}`}
+src={`https://spotify-backend-lug8.onrender.com/uploads/${artist.image}`}
 alt={artist.name}
 />
 
@@ -70,7 +70,7 @@ key={song._id}
 >
 
 <img
-src={`http://https://spotify-backend-lug8.onrender.com/uploads/${song.image}`}
+src={`https://spotify-backend-lug8.onrender.com/uploads/${song.image}`}
 />
 
 <div>
@@ -80,7 +80,7 @@ src={`http://https://spotify-backend-lug8.onrender.com/uploads/${song.image}`}
 
 <audio controls>
 <source
-src={`http://https://spotify-backend-lug8.onrender.com/uploads/${song.audio}`}
+src={`https://spotify-backend-lug8.onrender.com/uploads/${song.audio}`}
 type="audio/mpeg"
 />
 </audio>
