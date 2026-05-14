@@ -304,14 +304,26 @@ router.get("/artists", async (req, res) => {
 
 //artist details route
 router.get("/artist/:id", async (req, res) => {
-  try {
-    const artist = await Artist.findById(req.params.id);
-    const songs = await Song.find({ artist: req.params.id }); 
-    res.json({ artist, songs });
-  } 
-  catch (err) {
-    res.status(500).json({ message: "Error fetching artist details" });
-  }
+
+try {
+
+const artist = await Artist.findById(req.params.id);
+
+const songs = await Song.find({
+artist: req.params.id
+});
+
+res.json({
+artist,
+songs
+});
+
+} catch (error) {
+
+res.status(500).json(error);
+
+}
+
 });
 
 
