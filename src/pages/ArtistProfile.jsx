@@ -1,56 +1,69 @@
-import {useEffect,useState} from "react";
-import {useParams} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./ArtistProfile.css";
 
-function ArtistProfile(){
+function ArtistProfile() {
 
-const {id}=useParams();
+const { id } = useParams();
 
-const [artist,setArtist]=useState({});
-const [songs,setSongs]=useState([]);
+const [artist, setArtist] = useState({});
+const [songs, setSongs] = useState([]);
 
-useEffect(()=>{
+const BASE_URL = "https://spotify-backend-lug8.onrender.com";
+
+useEffect(() => {
 fetchArtist();
-},[]);
+}, []);
 
-const fetchArtist = async()=>{
+const fetchArtist = async () => {
 
-const res=await axios.get(
-`https://spotify-backend-lug8.onrender.com/api/auth/artist/${id}`
+try {
+
+const res = await axios.get(
+`${BASE_URL}/api/auth/artist/${id}`
 );
 
 setArtist(res.data.artist);
 setSongs(res.data.songs);
 
+} catch (error) {
+
+console.log(error);
+
+}
+
 };
 
-return(
+return (
 
 <div className="artist-profile">
 
 <div className="artist-header">
 
 <img
-src={`https://spotify-backend-lug8.onrender.com/uploads/${artist.image}`}
+src={`${BASE_URL}/uploads/${artist.image}`}
 alt={artist.name}
 />
 
-<div>
+<div className="artist-details">
+
 <h1>{artist.name}</h1>
 
-<p>DOB: {artist.dob}</p>
-
-<p>Genre: {artist.category}</p>
-
 <p>
-Monthly Listeners:
-{artist.monthlyListeners}
+<span>DOB:</span> {artist.dob}
 </p>
 
 <p>
-Total Songs:
-{songs.length}
+<span>Genre:</span> {artist.category}
+</p>
+
+<p>
+<span>Monthly Listeners:</span> {artist.monthlyListeners}
+</p>
+
+<p>
+<span>Total Songs:</span> {songs.length}
 </p>
 
 </div>
@@ -58,11 +71,11 @@ Total Songs:
 </div>
 
 
-<h2>Popular Songs</h2>
+<h2 className="song-title-heading">Popular Songs</h2>
 
 <div className="artist-song-list">
 
-{songs.map(song=>(
+{songs.map((song) => (
 
 <div
 className="artist-song-card"
@@ -70,20 +83,24 @@ key={song._id}
 >
 
 <img
-src={`https://spotify-backend-lug8.onrender.com/uploads/${song.image}`}
+src={`${BASE_URL}/uploads/${song.image}`}
+alt={song.title}
 />
 
-<div>
+<div className="song-info">
+
 <h3>{song.title}</h3>
+
 <p>{song.category}</p>
-</div>
 
 <audio controls>
 <source
-src={`https://spotify-backend-lug8.onrender.com/uploads/${song.audio}`}
+src={`${BASE_URL}/uploads/${song.audio}`}
 type="audio/mpeg"
 />
 </audio>
+
+</div>
 
 </div>
 
@@ -93,7 +110,7 @@ type="audio/mpeg"
 
 </div>
 
-)
+);
 
 }
 
