@@ -5,6 +5,15 @@ import "./Home.css";
 
 const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
+const MOODS = ["All Moods", "Happy", "Sad", "Romantic", "Chill", "Party", "Motivational"];
+
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
+
 function Home() {
   const [songs, setSongs] = useState([]);
   const [artists, setArtists] = useState([]);
@@ -12,7 +21,6 @@ function Home() {
   const [selectedMood, setSelectedMood] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -20,32 +28,23 @@ function Home() {
     navigate("/Login");
   };
 
-  const playSong = (song) => {
-    setCurrentSong(song);
-  };
+  const playSong = (song) => setCurrentSong(song);
 
- useEffect(() => {
-  fetchSongs(selectedMood);
-  fetchArtists();
-}, [selectedMood]);
+  useEffect(() => {
+    fetchSongs(selectedMood);
+    fetchArtists();
+  }, [selectedMood]);
 
- const fetchSongs = async (mood = "") => {
-
-  try {
-
-    const BASE_URL = "https://spotify-backend-lug8.onrender.com";
-
-    let url = `${BASE_URL}/api/auth/songs`;
-
-    if (mood) {
-      url += `?mood=${mood}`;
+  const fetchSongs = async (mood = "") => {
+    try {
+      let url = `${BASE_URL}/api/auth/songs`;
+      if (mood && mood !== "All Moods") url += `?mood=${mood}`;
+      const res = await axios.get(url);
+      setSongs(res.data);
+    } catch (error) {
+      console.log(error);
     }
-    const res = await axios.get(url);
-    setSongs(res.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
   const fetchArtists = async () => {
     try {
@@ -58,21 +57,23 @@ function Home() {
 
   return (
     <div className="app">
+
+      {/* ── Topbar ── */}
       <div className="topbar">
         <div className="nav-left">
-          <div className="logo-circle"><img
-    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
-    alt="spotify"
-    className="spotify-logo"
-  /></div>
+          <div className="logo-circle">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+              alt="Spotify"
+              className="spotify-logo"
+            />
+          </div>
 
-          <button className="home-btn">🏠</button>
+          <button className="home-btn" onClick={() => navigate("/")}>🏠</button>
 
           <div className="search-box">
             <span className="search-icon">🔍</span>
-
             <input placeholder="What do you want to play?" />
-
             <span className="library-icon">📚</span>
           </div>
         </div>
@@ -81,92 +82,84 @@ function Home() {
           <Link to="/Subscription">Premium</Link>
 
           {user?.isPremium && (
-            <div className="premium-badge">
-              👑 Premium
-            </div>
+            <div className="premium-badge">👑 Premium</div>
           )}
 
           {!user && (
             <>
               <Link to="/Registration">Sign up</Link>
-
-              <Link to="/Login" className="login-btn">
-                Log in
-              </Link>
+              <Link to="/Login" className="login-btn">Log in</Link>
             </>
           )}
 
           {user && (
             <>
-              <Link to="/UserProfile" className="login-btn">Profile
-                {user.name}
+              <Link to="/UserProfile" className="login-btn">
+                {user.firstName || user.name || "Profile"}
               </Link>
-
-              <button
-                className="logout-btn"
-                onClick={handleLogout}
-              >
-                Logout
+              <button className="logout-btn" onClick={handleLogout}>
+                Log out
               </button>
             </>
           )}
         </div>
       </div>
 
+      {/* ── Main Content ── */}
       <div className="content full">
+
+        {/* Greeting */}
+        <div className="home-greeting">
+          <h1>{getGreeting()}{user ? `, ${user.firstName || user.name}` : ""} 👋</h1>
+          <p>Discover music that fits your mood.</p>
+        </div>
+
+        {/* Mood Chips */}
+        <div className="mood-chips">
+          {MOODS.map((mood) => (
+            <button
+              key={mood}
+              className={`mood-chip ${selectedMood === (mood === "All Moods" ? "" : mood) ? "active" : ""}`}
+              onClick={() => setSelectedMood(mood === "All Moods" ? "" : mood)}
+            >
+              {mood}
+            </button>
+          ))}
+        </div>
+
+        {/* Songs Section */}
         <div className="section">
           <div className="section-header">
-            <div className="mood-filter">
-
-<select
-value={selectedMood}
-onChange={(e) => setSelectedMood(e.target.value)}
->
-
-<option value="">All Moods</option>
-<option value="Happy">Happy</option>
-<option value="Sad">Sad</option>
-<option value="Romantic">Romantic</option>
-<option value="Chill">Chill</option>
-<option value="Party">Party</option>
-<option value="Motivational">Motivational</option>
-
-</select>
-
-</div>
-            <h2>Trending songs</h2>
-            <span>Show all</span>
+            <h2>
+              {selectedMood ? `${selectedMood} Picks` : "Trending Songs"}
+            </h2>
+            <button className="show-all-btn">Show all</button>
           </div>
 
           <div className="song-grid">
             {songs.map((song) => (
-              <div className="song-card" key={song._id}>
+              <div className="song-card" key={song._id} onClick={() => playSong(song)}>
                 <div className="cover">
                   <img
                     src={`${BASE_URL}/uploads/${song.image}`}
                     alt={song.title}
                   />
-
-                  <button
-                    onClick={() => playSong(song)}
-                    className="play-btn"
-                  >
+                  <button className="play-btn" onClick={(e) => { e.stopPropagation(); playSong(song); }}>
                     ▶
                   </button>
                 </div>
-
                 <h4>{song.title}</h4>
-
                 <p>{song.artist?.name}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Artists Section */}
         <div className="section">
           <div className="section-header">
-            <h2>Popular artists</h2>
-            <span>Show all</span>
+            <h2>Popular Artists</h2>
+            <button className="show-all-btn">Show all</button>
           </div>
 
           <div className="artist-grid">
@@ -180,14 +173,16 @@ onChange={(e) => setSelectedMood(e.target.value)}
                   src={`${BASE_URL}/uploads/${artist.image}`}
                   alt={artist.name}
                 />
-
                 <h4>{artist.name}</h4>
+                <span>Artist</span>
               </Link>
             ))}
           </div>
         </div>
+
       </div>
 
+      {/* ── Player ── */}
       {currentSong && (
         <div className="player">
           <div className="player-left">
@@ -195,7 +190,6 @@ onChange={(e) => setSelectedMood(e.target.value)}
               src={`${BASE_URL}/uploads/${currentSong.image}`}
               alt={currentSong.title}
             />
-
             <div>
               <h4>{currentSong.title}</h4>
               <p>{currentSong.artist?.name}</p>
@@ -212,6 +206,7 @@ onChange={(e) => setSelectedMood(e.target.value)}
           </div>
         </div>
       )}
+
     </div>
   );
 }
