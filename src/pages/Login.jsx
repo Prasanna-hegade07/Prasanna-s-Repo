@@ -1,92 +1,198 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
 const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [adminMode, setAdminMode] = useState(false);
 
-  const handleLogin = async (e) => {
-  e.preventDefault();
+const navigate = useNavigate();
 
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/api/auth/login`,
-      {
-        email,
-        password,
-      }
-    );
+const handleLogin = async (e) => {
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(response.data.user)
-    );
+e.preventDefault();
 
-    alert("Login Successful");
+if (adminMode) {
 
-    navigate("/");
-  } catch (error) {
+if (
+email === "admin@spotify.com" &&
+password === "admin123"
+) {
 
-    if (error.response?.data?.message === "User not found") {
-      alert("Account does not exist. Please create an account first.");
-      navigate("/Registration");
-    }
+localStorage.setItem("admin", true);
 
-    else if (error.response?.data?.message === "Invalid credentials") {
-      alert("Incorrect password");
-    }
+alert("Admin Login Successful");
 
-    else {
-      alert("Login failed");
-    }
-  }
+navigate("/AdminDashboard");
+
+} else {
+
+alert("Invalid Admin Credentials");
+
+}
+
+return;
+
+}
+
+try {
+
+const response = await axios.post(
+`${BASE_URL}/api/auth/login`,
+{
+email,
+password,
+}
+);
+
+localStorage.setItem(
+"user",
+JSON.stringify(response.data.user)
+);
+
+localStorage.setItem(
+"userId",
+response.data.user._id
+);
+
+alert("Login Successful");
+
+navigate("/");
+
+} catch (error) {
+
+if (
+error.response?.data?.message ===
+"User not found"
+) {
+
+alert(
+"Account does not exist. Please create an account first."
+);
+
+navigate("/Registration");
+
+}
+
+else if (
+error.response?.data?.message ===
+"Invalid credentials"
+) {
+
+alert("Incorrect password");
+
+}
+
+else {
+
+alert("Login failed");
+
+}
+
+}
+
 };
 
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        <h1>Sign in</h1>
+return (
 
-        <form className="login-form" onSubmit={handleLogin}>
-          <label>Email:</label>
+<div className="login-page">
 
-          <input
-            type="email"
-            placeholder="Enter Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+<div className="overlay">
 
-          <label>Password:</label>
+<div className="login-card">
 
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+<div className="spotify-logo">
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+alt="spotify"
+/>
+</div>
 
-          <button type="submit" className="login-btn">
-            Sign In
-          </button>
-        </form>
+<h1>
+{adminMode ? "Admin Login" : "Log in to Spotify"}
+</h1>
 
-        <p className="signup-text">
-          Don’t have an account?
-          <Link to="/Registration"> Sign up</Link>
-        </p>
-      </div>
-    </div>
-  );
+<form onSubmit={handleLogin}>
+
+<input
+type="email"
+placeholder="Email address"
+value={email}
+onChange={(e) =>
+setEmail(e.target.value)
+}
+required
+/>
+
+<input
+type="password"
+placeholder="Password"
+value={password}
+onChange={(e) =>
+setPassword(e.target.value)
+}
+required
+/>
+
+<button type="submit">
+{adminMode ? "Admin Login" : "Log In"}
+</button>
+
+</form>
+
+<div className="switch-mode">
+
+<p>
+
+{adminMode
+? "Switch to User Login"
+: "Switch to Admin Login"}
+
+</p>
+
+<label className="switch">
+
+<input
+type="checkbox"
+checked={adminMode}
+onChange={() =>
+setAdminMode(!adminMode)
+}
+/>
+
+<span className="slider"></span>
+
+</label>
+
+</div>
+
+{!adminMode && (
+
+<p className="signup-link">
+
+Don't have an account?
+
+<Link to="/Registration">
+Sign up
+</Link>
+
+</p>
+
+)}
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default Login;
