@@ -1,117 +1,140 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ArtistProfile.css";
 
-function ArtistProfile() {
-
-const { id } = useParams();
-
-const [artist, setArtist] = useState({});
-const [songs, setSongs] = useState([]);
-
 const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
-useEffect(() => {
-fetchArtist();
-}, []);
-
-const fetchArtist = async () => {
-
-try {
-
-const res = await axios.get(
-`${BASE_URL}/api/auth/artist/${id}`
-);
-
-setArtist(res.data.artist);
-setSongs(res.data.songs);
-
-} catch (error) {
-
-console.log(error);
-
+function formatListeners(n) {
+  if (!n) return "—";
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + "M";
+  if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
+  return n.toString();
 }
 
-};
+function formatDob(dob) {
+  if (!dob) return "—";
+  const d = new Date(dob);
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+}
 
-return (
+function ArtistProfile() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-<div className="artist-profile">
+  const [artist, setArtist] = useState({});
+  const [songs, setSongs] = useState([]);
 
-<div className="artist-header">
+  useEffect(() => {
+    fetchArtist();
+  }, []);
 
-<img
-src={`${BASE_URL}/uploads/${artist.image}`}
-alt={artist.name}
-/>
+  const fetchArtist = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/auth/artist/${id}`);
+      setArtist(res.data.artist);
+      setSongs(res.data.songs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-<div className="artist-details">
+  const artistImgUrl = artist.image
+    ? `${BASE_URL}/uploads/${artist.image}`
+    : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
-<h1>{artist.name}</h1>
+  return (
+    <div className="artist-profile">
 
-<p>
-<span>DOB:</span> {artist.dob}
-</p>
+      {/* ── Hero Banner ── */}
+      <div className="artist-hero">
+        {/* Blurred background from artist image */}
+        <div
+          className="artist-hero-bg"
+          style={{ backgroundImage: `url(${artistImgUrl})` }}
+        />
+        <div className="artist-hero-gradient" />
 
-<p>
-<span>Genre:</span> {artist.category}
-</p>
+        {/* Back button */}
+        <button className="back-btn" onClick={() => navigate(-1)}>‹</button>
 
-<p>
-<span>Monthly Listeners:</span> {artist.monthlyListeners}
-</p>
+        <div className="artist-hero-content">
+          <img
+            src={artistImgUrl}
+            alt={artist.name}
+            className="artist-hero-img"
+          />
 
-<p>
-<span>Total Songs:</span> {songs.length}
-</p>
+          <div className="artist-hero-info">
+            <div className="artist-verified">
+              <span>✓</span> Verified Artist
+            </div>
 
-</div>
+            <h1>{artist.name}</h1>
 
-</div>
+            <div className="artist-stats">
+              <div className="artist-stat">
+                <span className="artist-stat-label">Monthly Listeners</span>
+                <span className="artist-stat-value">
+                  {formatListeners(artist.monthlyListeners)}
+                </span>
+              </div>
+              <div className="artist-stat">
+                <span className="artist-stat-label">Date of Birth</span>
+                <span className="artist-stat-value">{formatDob(artist.dob)}</span>
+              </div>
+              <div className="artist-stat">
+                <span className="artist-stat-label">Total Songs</span>
+                <span className="artist-stat-value">{songs.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      {/* ── Content ── */}
+      <div className="artist-content">
 
-<h2 className="song-title-heading">Popular Songs</h2>
+        {/* Genre badge */}
+        {artist.category && (
+          <div className="genre-badge">{artist.category}</div>
+        )}
 
-<div className="artist-song-list">
+        <h2 className="songs-heading">Popular Songs</h2>
 
-{songs.map((song) => (
+        <div className="artist-song-list">
+          {songs.map((song, index) => (
+            <div className="artist-song-card" key={song._id}>
 
-<div
-className="artist-song-card"
-key={song._id}
->
+              <div className="song-number">{index + 1}</div>
+              <div className="song-play-hover">▶</div>
 
-<img
-src={`${BASE_URL}/uploads/${song.image}`}
-alt={song.title}
-/>
+              <img
+                src={`${BASE_URL}/uploads/${song.image}`}
+                alt={song.title}
+              />
 
-<div className="song-info">
+              <div className="song-info">
+                <h3>{song.title}</h3>
+                <p>{song.category || artist.category}</p>
+              </div>
 
-<h3>{song.title}</h3>
+              <div className="song-audio-col">
+                <audio controls>
+                  <source
+                    src={`${BASE_URL}/uploads/${song.audio}`}
+                    type="audio/mpeg"
+                  />
+                </audio>
+              </div>
 
-<p>{song.category}</p>
+            </div>
+          ))}
+        </div>
 
-<audio controls>
-<source
-src={`${BASE_URL}/uploads/${song.audio}`}
-type="audio/mpeg"
-/>
-</audio>
-
-</div>
-
-</div>
-
-))}
-
-</div>
-
-</div>
-
-);
-
+      </div>
+    </div>
+  );
 }
 
 export default ArtistProfile;
