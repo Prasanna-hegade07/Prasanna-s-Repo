@@ -12,101 +12,115 @@ function Registration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      firstName,
-      lastName,
-      email,
-      password
-    };
+    const formData = { firstName, lastName, email, password };
 
     try {
-
-      const response = await axios.post(
+      await axios.post(
         "https://spotify-backend-lug8.onrender.com/api/auth/register",
         formData
       );
 
       alert("User Registered Successfully");
-
-      //clearing form fields
       setFirstName("");
       setLastName("");
       setEmail("");
       setPassword("");
-
     } catch (error) {
       console.error(error);
       alert("Registration Failed");
     }
   };
+
   return (
-    <div className="Reg-container">
-
+    <div className="Reg-page">
       <nav className="navigationbar">
-            <div className="navigationlogo"><img 
-          src="/images/logob.png"
-          className="logo"
-        /></div>   
-            <div className="navbtns">
-                <Link to="/Login" className="loginbtnnav">Sign in</Link>
-                <Link to="/Home" className="regbtnnav">Home</Link>
-                <Link to="/Adminlogin" className="regbtnnav">Admin Login</Link>
+        <div className="navigationlogo">
+          <img src="/images/logob.png" alt="Spotify" />
+        </div>
+        <div className="navbtns">
+          <Link to="/Home" className="regbtnnav">Home</Link>
+          <Link to="/Adminlogin" className="regbtnnav">Admin Login</Link>
+          <Link to="/Login" className="regbtnnav primary">Sign in</Link>
+        </div>
+      </nav>
+
+      <div className="Reg-overlay">
+        <div className="Reg-card">
+
+          <div className="Reg-card-logo">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+              alt="Spotify"
+            />
+          </div>
+
+          <h1>Create account</h1>
+          <p className="subtitle">Start listening for free today.</p>
+
+          <form className="Reg-form" onSubmit={handleSubmit}>
+
+            <div className="name-row">
+              <div className="input-group">
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="input-group">
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
             </div>
-            </nav>
 
-      <div className="Reg-card">
+            <div className="input-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="name@domain.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-        <h1>Sign up</h1>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-        <form className="Reg-form" onSubmit={handleSubmit}>
+            <button type="submit" className="Reg-btn">
+              Sign Up to Listen
+            </button>
 
-          <label>First Name</label>
-          <input
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
+          </form>
 
-          <label>Last Name</label>
-          <input
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+          <p className="signup-text">
+            Already a listener?
+            <Link to="/Login">Log in here</Link>
+          </p>
 
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder="Enter the Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Create a Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <button type="submit" className="Reg-btn">
-            Sign Up to Listen
-          </button>
-
-        </form>
-
-        <p className="signup-text">
-          Already a Listener?{" "}
-          <Link to="/login">Login to Listen</Link>
-        </p>
-
+        </div>
       </div>
     </div>
   );

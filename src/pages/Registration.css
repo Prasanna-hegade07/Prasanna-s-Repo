@@ -1,174 +1,262 @@
-body {
+* {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  background: white;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo{
-    justify-content: left;
-    width: 250px;
-    height: 150px;
-}
-
-.Reg-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: 550px;
-  margin-top: 80px;
-  margin-bottom: 40px;
-}
-
-.Reg-card {
-  height: auto;
-  background-color: #121212;
-  padding: 48px 60px;
-  width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-}
-
-.logo {
-  width: 130px;
-  display: block;
-  margin: 0 auto 30px auto;
-}
-
-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  text-align: center;
-  color: white;
-}
-
-.Reg-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 6px;
-}
-
-input {
-  padding: 14px;
-  margin-bottom: 18px;
-  border-radius: 4px;
-  border: none;
-  background-color: #2a2a2a;
-  color: white;
-  font-size: 14px;
-}
-
-input:focus {
-  outline: 2px solid #1db954;
-}
-
-.Reg-btn {
-  padding: 14px;
-  border-radius: 30px;
-  border: none;
-  background-color: #1db954;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.Reg-btn:hover {
-  background-color: #1ed760;
-  transform: scale(1.04);
-}
-
-.divider p {
-  margin: 0 15px;
-  font-size: 13px;
-  color: #b3b3b3;
-}
-
-.social-btn {
+html, body, #root {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 30px;
-  border: 1px solid #727272;
-  background: transparent;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
+  min-height: 100vh;
 }
 
-.social-btn:hover {
-  border-color: white;
+body {
+  font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #000;
 }
 
-.signup-text {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #b3b3b3;
-  text-align: center;
-}
-
-.signup-text a {
-  color: white;
-  font-weight: 600;
-  text-decoration: underline;
-}
-
+/* ── Navbar ── */
 .navigationbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
-  background-color: #52f136;
+  height: 64px;
+  background-color: #000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
+  padding: 0 40px;
   z-index: 1000;
-  border-bottom: 1px solid #1f1f1f;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
+.navigationlogo img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
 
 .navbtns {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 12px;
 }
 
-
 .loginbtnnav {
-  background-color: white;
-  color: hwb(0 0% 100%);
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
+  background: transparent;
+  color: #b3b3b3;
+  padding: 8px 18px;
+  border-radius: 500px;
+  font-weight: 700;
+  font-size: 14px;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: color 0.15s;
 }
 
 .loginbtnnav:hover {
-  color: rgb(112, 3, 3);
-  transform: scale(1.05);
+  color: #ffffff;
 }
 
 .regbtnnav {
-  background-color: white;
-  color: hwb(0 0% 99%);
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
+  background: transparent;
+  color: #b3b3b3;
+  padding: 8px 18px;
+  border-radius: 500px;
+  font-weight: 700;
+  font-size: 14px;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: color 0.15s;
 }
 
 .regbtnnav:hover {
-  transform: scale(1.05);
-  color: rgb(112, 3, 3);
+  color: #ffffff;
+}
+
+.regbtnnav.primary {
+  background: #1db954;
+  color: #000;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.regbtnnav.primary:hover {
+  background: #1ed760;
+  color: #000;
+  transform: scale(1.03);
+}
+
+/* ── Page layout ── */
+.Reg-page {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Reg-overlay {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.80);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 96px 24px 40px;
+}
+
+/* ── Card ── */
+.Reg-card {
+  width: 100%;
+  max-width: 480px;
+  background: #121212;
+  padding: 44px 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.7);
+  text-align: center;
+}
+
+.Reg-card-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.Reg-card-logo img {
+  width: 44px;
+  height: 44px;
+}
+
+.Reg-card h1 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.Reg-card .subtitle {
+  color: #6a6a6a;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+/* ── Form ── */
+.Reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+}
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #535353;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 0;
+}
+
+.input-group input:focus {
+  border-color: #ffffff;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: #6a6a6a;
+}
+
+.Reg-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 500px;
+  background: #1db954;
+  color: #000;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  margin-top: 8px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.Reg-btn:hover {
+  background: #1ed760;
+  transform: scale(1.02);
+}
+
+.Reg-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Footer ── */
+.signup-text {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #6a6a6a;
+  text-align: center;
+  border-top: 1px solid #2a2a2a;
+  padding-top: 20px;
+}
+
+.signup-text a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-left: 4px;
+  transition: color 0.15s;
+}
+
+.signup-text a:hover {
+  color: #1db954;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 520px) {
+  .Reg-card {
+    padding: 36px 24px;
+  }
+
+  .name-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .Reg-card h1 {
+    font-size: 24px;
+  }
+
+  .navigationbar {
+    padding: 0 20px;
+  }
 }
