@@ -94,8 +94,13 @@ function Home() {
 
           {user && (
             <>
-              <Link to="/UserProfile" className="login-btn">
-                {user.firstName || user.name || "Profile"}
+              <Link to="/UserProfile" className="profile-avatar-btn" title="View Profile">
+                <div className="profile-avatar-circle">
+                  {(user.firstName || user.name || "U")[0].toUpperCase()}
+                </div>
+                <span className="profile-avatar-name">
+                  {user.firstName || user.name}
+                </span>
               </Link>
               <button className="logout-btn" onClick={handleLogout}>
                 Log out

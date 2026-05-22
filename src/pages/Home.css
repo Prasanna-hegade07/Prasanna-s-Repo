@@ -499,3 +499,46 @@ body {
     font-size: 26px;
   }
 }
+
+/* ── Profile Avatar Button ── */
+.profile-avatar-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background: #282828;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 500px;
+  padding: 5px 14px 5px 5px;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.profile-avatar-btn:hover {
+  background: #3e3e3e;
+  border-color: rgba(255,255,255,0.25);
+}
+
+.profile-avatar-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #1db954;
+  color: #000;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-avatar-name {
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
