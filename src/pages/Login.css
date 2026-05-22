@@ -6,41 +6,45 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 .login-page{
+width:100%;
 height:100vh;
 background:url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1920&auto=format&fit=crop")
-center/cover no-repeat;
+center center/cover no-repeat;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 }
 
 .overlay{
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.75);
 display:flex;
 justify-content:center;
 align-items:center;
+padding:20px;
 }
 
 .login-card{
 width:420px;
 background:#121212;
 padding:45px;
-border-radius:18px;
+border-radius:20px;
 text-align:center;
-box-shadow:0 0 30px rgba(0,0,0,0.6);
+box-shadow:0 0 35px rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
 }
 
 .spotify-logo img{
-width:70px;
-margin-bottom:20px;
+width:75px;
+margin-bottom:15px;
 }
 
 .login-card h1{
 color:white;
+font-size:40px;
 margin-bottom:35px;
-font-size:34px;
 }
 
 .login-card form{
@@ -50,7 +54,8 @@ gap:20px;
 }
 
 .login-card input{
-padding:15px;
+width:100%;
+padding:16px;
 border:none;
 border-radius:10px;
 background:#282828;
@@ -64,20 +69,21 @@ color:#b3b3b3;
 }
 
 .login-card button{
+width:100%;
 padding:15px;
 border:none;
-border-radius:30px;
+border-radius:35px;
 background:#1db954;
 color:black;
-font-size:17px;
+font-size:18px;
 font-weight:bold;
 cursor:pointer;
 transition:0.3s;
 }
 
 .login-card button:hover{
-transform:scale(1.03);
 background:#1ed760;
+transform:scale(1.02);
 }
 
 .switch-mode{
@@ -85,8 +91,9 @@ margin-top:25px;
 display:flex;
 justify-content:center;
 align-items:center;
-gap:15px;
+gap:12px;
 color:white;
+font-size:15px;
 }
 
 .switch{
@@ -135,17 +142,31 @@ transform:translateX(27px);
 }
 
 .signup-link{
-margin-top:30px;
+margin-top:28px;
 color:#b3b3b3;
+font-size:15px;
 }
 
 .signup-link a{
 color:#1db954;
 text-decoration:none;
-margin-left:5px;
 font-weight:bold;
+margin-left:5px;
 }
 
 .signup-link a:hover{
 text-decoration:underline;
+}
+
+@media screen and (max-width:500px){
+
+.login-card{
+width:100%;
+padding:35px 25px;
+}
+
+.login-card h1{
+font-size:30px;
+}
+
 }
