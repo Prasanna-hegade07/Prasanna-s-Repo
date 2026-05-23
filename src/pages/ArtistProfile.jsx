@@ -136,5 +136,4 @@ function ArtistProfile() {
     </div>
   );
 }
-
 export default ArtistProfile;
