@@ -482,3 +482,15 @@ body {
   .admin-content { padding: 24px 20px 48px; }
   .admin-welcome { flex-direction: column; gap: 16px; text-align: center; }
 }
+
+/* stat loading pulse */
+.stat-loading {
+  display: inline-block;
+  color: #535353;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}

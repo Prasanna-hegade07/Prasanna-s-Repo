@@ -1,19 +1,46 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./AdminDashboard.css";
+
+const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
 function AdminDashboard() {
   const navigate = useNavigate();
+
+  const [stats, setStats] = useState({
+    totalSongs: null,
+    totalArtists: null,
+    totalUsers: null,
+    premiumUsers: null,
+  });
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/auth/admin/stats`);
+      setStats(res.data);
+    } catch (err) {
+      console.error("Failed to fetch stats:", err);
+    } finally {
+      setLoadingStats(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
     navigate("/Adminlogin");
   };
 
-  const stats = [
-    { icon: "🎵", label: "Total Songs",    value: "—", trend: "on platform" },
-    { icon: "🎤", label: "Total Artists",  value: "—", trend: "registered" },
-    { icon: "👥", label: "Total Users",    value: "—", trend: "registered" },
-    { icon: "👑", label: "Premium Users",  value: "—", trend: "subscribed" },
+  const statCards = [
+    { icon: "🎵", label: "Total Songs",   value: stats.totalSongs,   trend: "on platform" },
+    { icon: "🎤", label: "Total Artists", value: stats.totalArtists, trend: "registered" },
+    { icon: "👥", label: "Total Users",   value: stats.totalUsers,   trend: "registered" },
+    { icon: "👑", label: "Premium Users", value: stats.premiumUsers, trend: "subscribed" },
   ];
 
   return (
@@ -36,31 +63,25 @@ function AdminDashboard() {
 
         <nav className="sidebar-nav">
           <span className="sidebar-section-label">Overview</span>
-
           <button className="sidebar-item active">
             <span className="s-icon">📊</span> Dashboard
           </button>
 
           <span className="sidebar-section-label">Content</span>
-
           <button className="sidebar-item" onClick={() => navigate("/Addsongs")}>
             <span className="s-icon">➕</span> Add Song
           </button>
-
           <button className="sidebar-item" onClick={() => navigate("/Viewsongs")}>
             <span className="s-icon">🎵</span> View Songs
           </button>
-
           <button className="sidebar-item" onClick={() => navigate("/admin/add-artist")}>
             <span className="s-icon">🎤</span> Add Artist
           </button>
 
           <span className="sidebar-section-label">Management</span>
-
           <button className="sidebar-item" onClick={() => navigate("/admin/subscriptions")}>
             <span className="s-icon">👑</span> Subscriptions
           </button>
-
           <button className="sidebar-item" onClick={() => navigate("/admin/users")}>
             <span className="s-icon">👥</span> Users
           </button>
@@ -82,8 +103,6 @@ function AdminDashboard() {
 
       {/* ── Main ── */}
       <main className="admin-main">
-
-        {/* Topbar */}
         <div className="admin-topbar">
           <h2>Dashboard</h2>
           <div className="admin-topbar-right">
@@ -104,10 +123,14 @@ function AdminDashboard() {
 
           {/* Stats */}
           <div className="admin-stats">
-            {stats.map((s) => (
+            {statCards.map((s) => (
               <div className="stat-card" key={s.label}>
                 <div className="stat-icon">{s.icon}</div>
-                <h3>{s.value}</h3>
+                <h3>
+                  {loadingStats
+                    ? <span className="stat-loading">…</span>
+                    : s.value ?? "—"}
+                </h3>
                 <p>{s.label}</p>
                 <div className="stat-trend">↑ {s.trend}</div>
               </div>
