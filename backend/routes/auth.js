@@ -293,4 +293,14 @@ router.post("/add-artist", upload.single("image"), async (req, res) => {
   }
 });
 
+// Delete artist
+router.delete("/delete-artist/:id", async (req, res) => {
+  try {
+    await Artist.findByIdAndDelete(req.params.id);
+    res.json({ message: "Artist Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete Failed" });
+  }
+});
+
 module.exports = router;
