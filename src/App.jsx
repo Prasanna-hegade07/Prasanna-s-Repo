@@ -11,6 +11,7 @@ import ArtistProfile from "./pages/ArtistProfile";
 import AddArtist from "./pages/AddArtist";
 import Subscription  from "./pages/Subscription";
 import UserProfile from "./pages/UserProfile";
+import ViewArtists from "./pages/ViewArtists";
 function App() {
   return (
     <Routes>
@@ -27,6 +28,7 @@ function App() {
       <Route path="/admin/add-artist" element={<AddArtist />} />
       <Route path="/Subscription" element={<Subscription />} />
       <Route path="/UserProfile" element={<UserProfile />} />
+      <Route path="/admin/view-artists" element={<ViewArtists />} />
     </Routes>
   );
 } 
