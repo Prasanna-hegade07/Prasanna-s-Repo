@@ -77,6 +77,9 @@ function AdminDashboard() {
           <button className="sidebar-item" onClick={() => navigate("/admin/add-artist")}>
             <span className="s-icon">🎤</span> Add Artist
           </button>
+          <button className="sidebar-item" onClick={() => navigate("/admin/view-artists")}>
+            <span className="s-icon">👁</span> View Artists
+          </button>
 
           <span className="sidebar-section-label">Management</span>
           <button className="sidebar-item" onClick={() => navigate("/admin/subscriptions")}>
@@ -163,6 +166,9 @@ function AdminDashboard() {
                 <button className="card-btn primary" onClick={() => navigate("/admin/add-artist")}>
                   + Add Artist
                 </button>
+                <button className="card-btn secondary" onClick={() => navigate("/admin/view-artists")}>
+                  View All
+                </button>
               </div>
             </div>
 
@@ -198,6 +204,9 @@ function AdminDashboard() {
             </button>
             <button className="quick-btn" onClick={() => navigate("/admin/add-artist")}>
               <span>🎤</span> New Artist
+            </button>
+            <button className="quick-btn" onClick={() => navigate("/admin/view-artists")}>
+              <span>👁</span> View Artists
             </button>
             <button className="quick-btn" onClick={() => navigate("/Viewsongs")}>
               <span>📋</span> Song Library
