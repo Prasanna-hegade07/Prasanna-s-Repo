@@ -9,7 +9,7 @@ import Viewsongs from "./pages/Viewsongs";
 import Editsong from "./pages/Editsong";
 import ArtistProfile from "./pages/ArtistProfile";
 import AddArtist from "./pages/AddArtist";
-import ViewArtists from "./pages/ViewArtists";
+import ViewArtist from "./pages/ViewArtist";
 import Subscription from "./pages/Subscription";
 import UserProfile from "./pages/UserProfile";
 
@@ -27,7 +27,7 @@ function App() {
       <Route path="/edit-song/:id"        element={<Editsong />} />
       <Route path="/artist/:id"           element={<ArtistProfile />} />
       <Route path="/admin/add-artist"     element={<AddArtist />} />
-      <Route path="/admin/view-artists"   element={<ViewArtists />} />
+      <Route path="/admin/view-artists"   element={<ViewArtist />} />
       <Route path="/Subscription"         element={<Subscription />} />
       <Route path="/UserProfile"          element={<UserProfile />} />
     </Routes>
