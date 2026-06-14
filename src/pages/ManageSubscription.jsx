@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./ManageSubscriptions.css";
+import "./ManageSubscription.css";
 
 const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
