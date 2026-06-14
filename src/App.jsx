@@ -11,7 +11,7 @@ import ArtistProfile from "./pages/ArtistProfile";
 import AddArtist from "./pages/AddArtist";
 import ViewArtist from "./pages/ViewArtist";
 import ViewUsers from "./pages/ViewUsers";
-import ManageSubscriptions from "./pages/ManageSubscriptions";
+import ManageSubscription from "./pages/ManageSubscription";
 import Subscription from "./pages/Subscription";
 import UserProfile from "./pages/UserProfile";
 
@@ -31,7 +31,7 @@ function App() {
       <Route path="/admin/add-artist"          element={<AddArtist />} />
       <Route path="/admin/view-artists"        element={<ViewArtist />} />
       <Route path="/admin/users"               element={<ViewUsers />} />
-      <Route path="/admin/subscriptions"       element={<ManageSubscriptions />} />
+      <Route path="/admin/subscriptions"       element={<ManageSubscription />} />
       <Route path="/Subscription"              element={<Subscription />} />
       <Route path="/UserProfile"               element={<UserProfile />} />
     </Routes>
