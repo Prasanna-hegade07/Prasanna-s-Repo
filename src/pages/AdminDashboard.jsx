@@ -33,7 +33,7 @@ function AdminDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
-    navigate("/Adminlogin");
+    navigate("/Login");
   };
 
   const statCards = [
