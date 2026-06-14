@@ -2,169 +2,109 @@ import axios from "axios";
 import "./Subscription.css";
 import { useNavigate } from "react-router-dom";
 
-function Subscription() {
-
-const navigate = useNavigate();
-
 const BASE_URL = "https://spotify-backend-lug8.onrender.com";
 
-const payNow = async (amount, planName) => {
+const PLANS = [
+  {
+    name: "1 Month Premium Plan",
+    price: 99,
+    label: "₹99/month",
+    features: ["No Ads", "Unlimited Skips", "High Quality Audio", "No Podcast Access"],
+  },
+  {
+    name: "3 Month Premium Plan",
+    price: 299,
+    label: "₹299/3 months",
+    features: ["No Ads", "Unlimited Skips", "High Quality Audio", "Limited Podcast Access"],
+  },
+  {
+    name: "6 Month Premium Plan",
+    price: 499,
+    label: "₹499/6 months",
+    features: ["No Ads", "Unlimited Skips", "High Quality Audio", "International Podcasts"],
+    popular: true,
+  },
+  {
+    name: "Student Special Premium Plan",
+    price: 59,
+    label: "₹59/month",
+    features: ["No Ads", "Unlimited Skips", "High Quality Audio", "Free Podcast Access"],
+  },
+];
 
-try {
+function Subscription() {
+  const navigate = useNavigate();
 
-const { data } = await axios.post(
-`${BASE_URL}/api/payment/create-order`,
-{
-amount,
-planName
-}
-);
+  const payNow = async (amount, planName) => {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/api/payment/create-order`, { amount, planName });
 
-const options = {
-key: "rzp_test_SjHmRDW188B4zu",
-amount: data.amount,
-currency: data.currency,
-order_id: data.id,
+      const options = {
+        key: "rzp_test_SjHmRDW188B4zu",
+        amount: data.amount,
+        currency: data.currency,
+        order_id: data.id,
+        name: "Spotify Premium",
+        description: planName,
+        method: { upi: true, card: true, netbanking: true, wallet: true },
+        theme: { color: "#1db954" },
 
-method: {
-upi: true,
-card: true,
-netbanking: true,
-wallet: true
-},
+        handler: async function (response) {
+          try {
+            const verify = await axios.post(`${BASE_URL}/api/payment/verify-payment`, {
+              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature:  response.razorpay_signature,
+              userId: localStorage.getItem("userId"),
+              plan:   planName,
+            });
 
-name: "Spotify Premium",
-description: planName,
+            if (verify.data.success) {
+              // FIXED: update localStorage so profile reflects premium immediately
+              const updatedUser = verify.data.user;
+              localStorage.setItem("user", JSON.stringify(updatedUser));
 
-handler: async function (response) {
+              alert(`🎉 Welcome to ${planName}!`);
+              navigate("/UserProfile");  // send to profile so they see the update
+            }
+          } catch (error) {
+            console.log(error.response?.data || error);
+            alert("Payment verification failed. Contact support.");
+          }
+        },
+      };
 
-try {
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
 
-const verify = await axios.post(
-`${BASE_URL}/api/payment/verify-payment`,
-{
-razorpay_order_id: response.razorpay_order_id,
-razorpay_payment_id: response.razorpay_payment_id,
-razorpay_signature: response.razorpay_signature,
-userId: localStorage.getItem("userId"),
-plan: planName
-}
-);
+    } catch (error) {
+      console.log(error.response?.data || error);
+      alert("Could not initiate payment. Try again.");
+    }
+  };
 
-console.log(verify.data);
-
-if (verify.data.success) {
-alert("Payment Success");
-navigate("/");
-}
-
-} catch (error) {
-console.log(error.response?.data || error);
-alert("Verify payment failed");
-}
-
-},
-
-theme: {
-color: "#1db954"
-}
-
-};
-
-const razorpay = new window.Razorpay(options);
-razorpay.open();
-
-} catch (error) {
-
-console.log(error.response?.data || error);
-alert("Payment failed");
-
-}
-
-};
-
-return (
-
-<div className="premium-container">
-
-<h2>Upgrade to Premium</h2>
-
-<div className="plan-wrapper">
-
-<div className="plan-card">
-<h3>1 Month Premium Plan</h3>
-<p>₹99/month</p>
-
-<ul>
-<li>No Ads</li>
-<li>Unlimited Skips</li>
-<li>High Quality Audio</li>
-<li>No Podcast Access</li>
-</ul>
-
-<button onClick={() => payNow(99, "1 Month Premium Plan")}>
-Upgrade Now
-</button>
-</div>
-
-
-<div className="plan-card">
-<h3>3 Month Premium Plan</h3>
-<p>₹299/3 months</p>
-
-<ul>
-<li>No Ads</li>
-<li>Unlimited Skips</li>
-<li>High Quality Audio</li>
-<li>Limited Access to Podcast</li>
-</ul>
-
-<button onClick={() => payNow(299, "3 Month Premium Plan")}>
-Upgrade Now
-</button>
-</div>
-
-
-<div className="plan-card">
-<h3>6 Month Premium Plan</h3>
-<p>₹499/6 months</p>
-
-<ul>
-<li>No Ads</li>
-<li>Unlimited Skips</li>
-<li>High Quality Audio</li>
-<li>Access to International Podcasts</li>
-</ul>
-
-<button onClick={() => payNow(499, "6 Month Premium Plan")}>
-Upgrade Now
-</button>
-</div>
-
-
-<div className="plan-card">
-<h3>Student Special Premium Plan</h3>
-<p>₹59/month</p>
-
-<ul>
-<li>No Ads</li>
-<li>Unlimited Skips</li>
-<li>High Quality Audio</li>
-<li>Free Access to Podcast</li>
-</ul>
-
-<button onClick={() => payNow(59, "Student Special Premium Plan")}>
-Upgrade Now
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+  return (
+    <div className="premium-container">
+      <h2>Upgrade to Premium</h2>
+      <div className="plan-wrapper">
+        {PLANS.map((plan) => (
+          <div className={`plan-card ${plan.popular ? "popular" : ""}`} key={plan.name}>
+            {plan.popular && <div className="popular-badge">Most Popular</div>}
+            <h3>{plan.name}</h3>
+            <p>{plan.label}</p>
+            <ul>
+              {plan.features.map((f) => (
+                <li key={f}>✓ {f}</li>
+              ))}
+            </ul>
+            <button onClick={() => payNow(plan.price, plan.name)}>
+              Upgrade Now
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Subscription;

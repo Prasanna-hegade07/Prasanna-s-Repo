@@ -1,97 +1,173 @@
-.profile-container{
-min-height:100vh;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:40px;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #121212;
 }
 
-.profile-card{
-background:#181818;
-padding:40px;
-border-radius:20px;
-width:400px;
-text-align:center;
-box-shadow:0 0 25px rgba(0,0,0,0.6);
+.profile-container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1a3a24 0%, #121212 35%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
 }
 
-.profile-image{
-width:150px;
-height:150px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid #1db954;
-margin-bottom:20px;
+.profile-card {
+  background: #181818;
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 40px 36px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
 }
 
-.profile-card h2{
-font-size:32px;
-margin-bottom:10px;
-color:white;
+/* Avatar */
+.profile-avatar-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 20px;
 }
 
-.email{
-color:#b3b3b3;
-margin-bottom:20px;
+.profile-image {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1db954;
+  display: block;
 }
 
-.subscription-badge{
-padding:12px;
-border-radius:10px;
-font-weight:bold;
-margin-bottom:25px;
-font-size:18px;
+.profile-premium-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, #f59b00, #e8820c) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
 }
 
-.premium{
-background:#1db954;
-color:black;
+.profile-card h2 {
+  font-size: 26px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
 }
 
-.free{
-background:#333;
-color:white;
+.email {
+  color: #b3b3b3;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
-.profile-details{
-text-align:left;
-margin-top:20px;
+/* Badge */
+.subscription-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 500px;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 28px;
+  letter-spacing: 0.3px;
 }
 
-.profile-details p{
-color:#ddd;
-margin:15px 0;
-font-size:17px;
+.premium {
+  background: linear-gradient(135deg, #f59b00, #e8820c);
+  color: #000;
 }
 
-.profile-details span{
-font-weight:bold;
-color:white;
-margin-right:10px;
+.free {
+  background: #282828;
+  color: #b3b3b3;
+  border: 1px solid #333;
 }
 
-.logout-btn{
-margin-top:30px;
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:#1db954;
-color:black;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+/* Details */
+.profile-details {
+  background: #242424;
+  border-radius: 12px;
+  padding: 4px 0;
+  margin-bottom: 24px;
+  text-align: left;
 }
 
-.logout-btn:hover{
-background:#1ed760;
-transform:scale(1.02);
+.profile-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
-.loading{
-color:white;
-text-align:center;
-margin-top:100px;
+.profile-detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #535353;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.detail-value.green { color: #1db954; }
+
+/* Buttons */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upgrade-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 500px;
+  background: #1db954;
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.upgrade-btn:hover { background: #1ed760; transform: scale(1.02); }
+
+.logout-btn {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #535353;
+  border-radius: 500px;
+  background: transparent;
+  color: #b3b3b3;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.logout-btn:hover { border-color: white; color: white; }
+
+.loading {
+  color: white;
+  text-align: center;
+  margin-top: 100px;
+  font-family: inherit;
 }
