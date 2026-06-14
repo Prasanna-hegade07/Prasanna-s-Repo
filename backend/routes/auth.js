@@ -293,6 +293,26 @@ router.post("/add-artist", upload.single("image"), async (req, res) => {
   }
 });
 
+// Get all users (admin)
+router.get("/admin/users", async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching users" });
+  }
+});
+
+// Delete user (admin)
+router.delete("/admin/delete-user/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed" });
+  }
+});
+
 // Delete artist
 router.delete("/delete-artist/:id", async (req, res) => {
   try {
