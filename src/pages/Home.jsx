@@ -203,7 +203,7 @@ function Home() {
       {/* ── Main Content ── */}
       <div className="content full">
         <div className="home-greeting">
-          <h1>{getGreeting()}{user ? `, ${user.name}` : ""} 👋</h1>
+          <h1>{getGreeting()} 👋</h1>
           <p>Discover music that fits your mood.</p>
         </div>
 
